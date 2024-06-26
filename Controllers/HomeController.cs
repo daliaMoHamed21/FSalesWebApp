@@ -14,19 +14,29 @@ namespace SalesWebApp.Controllers
         {
             if (Session["Username"] == null || string.IsNullOrEmpty(Session["SessionId"]?.ToString()))
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Register", "Account");
             }
 
-            //Check if session is valid
+            // Check if session is valid
             var context = new AppDbContext();
             var userRepository = new UserRepository(context);
             var user = userRepository.GetByUsername(Session["Username"].ToString());
 
             if (user == null || user.SessionId != Session["SessionId"].ToString() || user.LastLogin.AddHours(3) <= DateTime.Now)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Register", "Account");
             }
 
+            return View();
+        }
+
+        public ActionResult About()
+        {
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
             return View();
         }
     }

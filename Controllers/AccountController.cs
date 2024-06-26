@@ -1,6 +1,7 @@
 ﻿using Core.UseCases;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
+using SalesWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,14 @@ namespace SalesWebApp.Controllers
     public class AccountController : Controller
     {
         private readonly LoginUseCase _loginUseCase;
+        private readonly RegisterUseCase _registerUseCase;
 
         public AccountController()
         {
             var context = new AppDbContext();
             var userRepository = new UserRepository(context);
             _loginUseCase = new LoginUseCase(userRepository);
+            _registerUseCase = new RegisterUseCase(userRepository);
         }
 
         [HttpGet]
@@ -43,20 +46,55 @@ namespace SalesWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(string username, string password)
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginViewModel model)
         {
-            if (_loginUseCase.Execute(username, password, out var sessionId))
+            if (ModelState.IsValid)
             {
-                Session["Username"] = username;
-                Session["SessionId"] = sessionId;
+                if (_loginUseCase.Execute(model.Username, model.Password, out var sessionId))
+                {
+                    Session["Username"] = model.Username;
+                    Session["SessionId"] = sessionId;
 
-                // Set session timeout to 3 hours
-                Session.Timeout = 180;
+                    // Set session timeout to 3 hours
+                    Session.Timeout = 180;
 
-                return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Invalid username or password";
+                }
             }
-            ViewBag.ErrorMessage = "Invalid username or password";
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult Register()
+        {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.Password != model.ConfirmPassword)
+                {
+                    ViewBag.ErrorMessage = "Passwords do not match.";
+                    return View(model);
+                }
+
+                if (_registerUseCase.Execute(model.Username, model.Password))
+                {
+                    return RedirectToAction("Login");
+                }
+                ViewBag.ErrorMessage = "Registration failed. Please try again.";
+            }
+            // If ModelState is not valid, return the view with validation errors
+            return View(model);
         }
 
         public ActionResult Logout()

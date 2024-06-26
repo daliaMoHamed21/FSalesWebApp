@@ -1,29 +1,85 @@
-﻿﻿@{
+﻿@model SalesWebApp.Models.LoginViewModel
+@{
     ViewBag.Title = "Login";
 }
 
-
-<h2 id="title">@ViewBag.Title.</h2>
+<h2 id="title" style="color: deepskyblue">@ViewBag.Title</h2>
 <h3>@ViewBag.Message</h3>
 
-@using (Html.BeginForm())
-{
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "loginForm" }))
+            {
+                @Html.AntiForgeryToken()
 
-    <div>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required />
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Username)
+                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group position-relative">
+                    @Html.LabelFor(m => m.Password)
+                    <div class="input-group">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", id = "password-input" })
+                        <span class="input-group-text toggle-password" style="cursor: pointer;">
+                            <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+                <br />
+
+                <div class="form-group text-center text-lg-start">
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 50%; padding: 8px;">Login</button>
+                </div>
+            }
+
+            @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+            {
+                <div class="alert alert-danger mt-3 text-center">@ViewBag.ErrorMessage</div>
+            }
+        </div>
     </div>
-    <br />
-    <div>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required />
-    </div>
-    <br />
+</div>
 
-    <button type="submit" style="width: 20%; background-color: lightblue; color: white; padding: 5px;">Login</button>
-}
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Toggle password visibility
+            $('.toggle-password').click(function () {
+                var passwordField = $('#password-input');
+                var type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+                passwordField.attr('type', type);
+                $(this).find('i').toggleClass('fa-eye-slash fa-eye');
+            });
 
-@if (ViewBag.ErrorMessage != null)
-{
-    <p style="color:red;">@ViewBag.ErrorMessage</p>
+            // Client-side form validation
+            $('#loginForm').validate({
+                rules: {
+                    Username: {
+                        required: true
+                    },
+                    Password: {
+                        required: true
+                    }
+                },
+                messages: {
+                    Username: {
+                        required: "Username is required."
+                    },
+                    Password: {
+                        required: "Password is required."
+                    }
+                },
+                errorElement: 'div',
+                errorPlacement: function (error, element) {
+                    error.addClass('text-danger');
+                    error.insertAfter(element);
+                }
+            });
+        });
+    </script>
 }
