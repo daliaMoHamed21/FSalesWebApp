@@ -1,11 +1,13 @@
 ﻿using SalesWebApp.App_Start;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System;
+using System.Threading;
+using System.Web;
+
+
 
 namespace SalesWebApp
 {
@@ -17,7 +19,29 @@ namespace SalesWebApp
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
             AutofacConfig.Configure();
+
+          
         }
+
+    //    protected void Application_AcquireRequestState(object sender, EventArgs e)
+    //    {
+    //        HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+    //        if (cookie != null && cookie.Value != null)
+    //        {
+    //            var culture = new System.Globalization.CultureInfo(cookie.Value);
+    //            Thread.CurrentThread.CurrentCulture = culture;
+    //            Thread.CurrentThread.CurrentUICulture = culture;
+    //        }
+    //        else
+    //        {
+    //            var culture = new System.Globalization.CultureInfo("en");
+    //            Thread.CurrentThread.CurrentCulture = culture;
+    //            Thread.CurrentThread.CurrentUICulture = culture;
+    //        }
+    //    }
     }
+
+
 }
