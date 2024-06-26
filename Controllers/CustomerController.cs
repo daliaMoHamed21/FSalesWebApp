@@ -87,13 +87,21 @@ namespace SalesWebApp.Controllers
         }
 
         // POST: Customer/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Customer/DeleteConfirmed/5
+        [HttpPost, ActionName("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var customer = _customerService.GetCustomerById(id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
             _customerService.DeleteCustomer(id);
             return RedirectToAction("Index");
         }
+
     }
+
 }
   
