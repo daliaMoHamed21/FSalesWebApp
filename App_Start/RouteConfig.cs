@@ -18,6 +18,17 @@ namespace SalesWebApp
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+           name: "CategoryEdit",
+           url: "Category/Edit/{id}",
+           defaults: new { controller = "Category", action = "Edit", id = UrlParameter.Optional }
+       );
+
+            routes.MapRoute(
+            name: "CustomerDeleteConfirmed",
+            url: "Customer/DeleteConfirmed/{id}",
+            defaults: new { controller = "Customer", action = "DeleteConfirmed", id = UrlParameter.Optional }
+        );
         }
     }
 }

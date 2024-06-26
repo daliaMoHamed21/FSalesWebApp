@@ -15,10 +15,13 @@ namespace SalesWebApp.App_Start
             var builder = new ContainerBuilder();
 
             // Register AppDbContext
-            builder.RegisterType<AppDbContext>().InstancePerRequest(); 
-            
+            builder.RegisterType<AppDbContext>().InstancePerRequest();
 
-            // Register your services and repositories
+
+            // Register services and repositories
+
+            builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerRequest();
+
             builder.RegisterType<CategoryService>().AsSelf();
             builder.RegisterType<CategoryRepository>().As<ICategoryRepository>();
 
@@ -29,14 +32,15 @@ namespace SalesWebApp.App_Start
             builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
 
             builder.RegisterType<InvoiceService>().AsSelf();
-            builder.RegisterType<InvoiceRepository>().As<ICustomerRepository>();
+            builder.RegisterType<InvoiceRepository>().As<IInvoiceRepository>();
 
             builder.RegisterType<InvoiceItemService>().AsSelf();
-            builder.RegisterType<InvoiceItemRepository>().As<ICustomerRepository>();
+            builder.RegisterType<InvoiceItemRepository>().As<IInvoiceItemRepository>();
 
 
-
-
+            // Register UseCases
+            builder.RegisterType<LoginUseCase>().InstancePerRequest();
+            builder.RegisterType<RegisterUseCase>().InstancePerRequest();
 
 
             // Register controllers
