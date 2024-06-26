@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Sales Web Application</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/modernizr")
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
@@ -32,15 +32,48 @@
     </nav>
     <div class="container body-content">
         @RenderBody()
-        @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
         @RenderSection("scripts", required: false)
+
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - Sales Web Application</p>
         </footer>
     </div>
+    <script>
+        var warningTimer;
+        var timeoutTimer;
+        var warningTime = 2 * 60 * 1000; // 2 minutes
+        var timeoutTime = 3 * 60 * 1000; // 3 minutes
 
+        function resetTimers() {
+            clearTimeout(warningTimer);
+            clearTimeout(timeoutTimer);
+            startTimers();
+        }
+
+        function startTimers() {
+            warningTimer = setTimeout(showWarning, warningTime);
+            timeoutTimer = setTimeout(logoutUser, timeoutTime);
+        }
+
+        function showWarning() {
+            if (confirm("Your session is about to expire. Do you want to stay signed in?")) {
+                resetTimers();
+            } else {
+                logoutUser();
+            }
+        }
+
+        function logoutUser() {
+            window.location.href = '@Url.Action("Logout", "Account")';
+        }
+
+        document.addEventListener('mousemove', resetTimers);
+        document.addEventListener('keypress', resetTimers);
+
+        startTimers();
+    </script>
 
 
 </body>

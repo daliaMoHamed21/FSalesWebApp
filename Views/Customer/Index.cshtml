@@ -8,7 +8,7 @@
 <div class="container">
     <h2>Customer List</h2>
     <p>
-        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Create New Customer", "Create", null, new { @class = "btn btn-primary" })
     </p>
     <table class="table table-bordered table-striped">
         <thead>
@@ -29,8 +29,9 @@
                     <td>@customer.Email</td>
                     <td>@customer.Phone</td>
                     <td>
-                        @Html.ActionLink("Details", "Details", new { id = customer.Id }, new { @class = "btn btn-info btn-sm" })
                         @Html.ActionLink("Edit", "Edit", new { id = customer.Id }, new { @class = "btn btn-warning btn-sm" })
+                        @Html.ActionLink("Details", "Details", new { id = customer.Id }, new { @class = "btn btn-info btn-sm" })
+
                         @Html.ActionLink("Delete", "Delete", new { id = customer.Id }, new { @class = "btn btn-danger btn-sm" })
                     </td>
                 </tr>
