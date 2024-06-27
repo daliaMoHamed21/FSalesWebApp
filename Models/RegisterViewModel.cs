@@ -13,6 +13,7 @@ namespace SalesWebApp.Models
 
         [Required(ErrorMessage = "Password is required.")]
         [MinLength(6, ErrorMessage = "Password must be at least {1} characters long.")]
+        [RegularExpression(@"^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).+$", ErrorMessage = "Password must contain numbers, letters, and special characters.")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Confirm Password is required.")]

@@ -25,22 +25,7 @@ namespace SalesWebApp
           
         }
 
-    //    protected void Application_AcquireRequestState(object sender, EventArgs e)
-    //    {
-    //        HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
-    //        if (cookie != null && cookie.Value != null)
-    //        {
-    //            var culture = new System.Globalization.CultureInfo(cookie.Value);
-    //            Thread.CurrentThread.CurrentCulture = culture;
-    //            Thread.CurrentThread.CurrentUICulture = culture;
-    //        }
-    //        else
-    //        {
-    //            var culture = new System.Globalization.CultureInfo("en");
-    //            Thread.CurrentThread.CurrentCulture = culture;
-    //            Thread.CurrentThread.CurrentUICulture = culture;
-    //        }
-    //    }
+    
     }
 
 

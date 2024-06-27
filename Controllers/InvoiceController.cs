@@ -11,7 +11,7 @@ namespace SalesWebApp.Controllers
     public class InvoiceController : Controller
     {
         private readonly InvoiceService _invoiceService;
-
+        
         public InvoiceController(InvoiceService invoiceService)
         {
             _invoiceService = invoiceService;
@@ -62,6 +62,7 @@ namespace SalesWebApp.Controllers
             {
                 return HttpNotFound();
             }
+           
             return View(invoice);
         }
 

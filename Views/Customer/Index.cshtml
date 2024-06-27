@@ -8,34 +8,37 @@
 <div class="container">
     <h2>Customer List</h2>
     <p>
-        @Html.ActionLink("Create New Customer", "Create", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Create New Customer", "Create", null, new { @class = "btn btn-primary mb-3" })
     </p>
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var customer in Model)
-            {
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
                 <tr>
-                    <td>@customer.Id</td>
-                    <td>@customer.Name</td>
-                    <td>@customer.Email</td>
-                    <td>@customer.Phone</td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = customer.Id }, new { @class = "btn btn-warning btn-sm" })
-                        @Html.ActionLink("Details", "Details", new { id = customer.Id }, new { @class = "btn btn-info btn-sm" })
-
-                        @Html.ActionLink("Delete", "Delete", new { id = customer.Id }, new { @class = "btn btn-danger btn-sm" })
-                    </td>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var customer in Model)
+                {
+                    <tr>
+                        <td>@customer.Id</td>
+                        <td>@customer.Name</td>
+                        <td>@customer.Email</td>
+                        <td>@customer.Phone</td>
+                        <td>
+                            <div class="btn-group">
+                                @Html.ActionLink("Edit", "Edit", new { id = customer.Id }, new { @class = "btn btn-warning btn-sm " })  
+                                @Html.ActionLink("Details", "Details", new { id = customer.Id }, new { @class = "btn btn-info btn-sm " }) 
+                                @Html.ActionLink("Delete", "Delete", new { id = customer.Id }, new { @class = "btn btn-danger btn-sm" })
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
