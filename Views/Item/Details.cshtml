@@ -18,6 +18,18 @@
 
         <dt>@Html.DisplayNameFor(model => model.Category.Name)</dt>
         <dd>@Html.DisplayFor(model => model.Category.Name)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.ImagePath)</dt>
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.ImagePath))
+            {
+                <img src="@Url.Content(Model.ImagePath)" alt="Image" style="max-width: 200px; max-height: 200px;" />
+            }
+            else
+            {
+                <span>No image available</span>
+            }
+        </dd>
     </dl>
 </div>
 

@@ -1,8 +1,15 @@
 ﻿@model IEnumerable<Core.Entities.Category>
 
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">@ViewBag.Message</div>
+}
+
 <p>
     @Html.ActionLink("Create New Category", "Create", null, new { @class = "btn btn-primary" })
 </p>
+
 
 <table class="table table-striped table-responsive">
     <thead>
